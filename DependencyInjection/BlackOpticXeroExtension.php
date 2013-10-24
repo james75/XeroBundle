@@ -19,10 +19,7 @@ class BlackOpticXeroExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $config);
 
-        $config = $config['black_optic_xero'];
-
         $privateKeyFile = $config['private_key'];
-
         if(!file_exists($privateKeyFile)){
             throw new FileNotFoundException('Unable able to find file: ' . $privateKeyFile);
         }
