@@ -10,6 +10,7 @@
            "blackoptic/xerobundle": "*"
            ...
        }
+    ```
 
 2. Run `php composer.phar update "blackoptic/xerobundle"`
 
@@ -36,6 +37,7 @@
         consumer_secret: <Your Consumer Secret>
         private_key: <Path to you private key>
    ```
+
 4. Request and use the service:
     ``` php
         $xeroClient = $this->get('blackoptic.xero.client');
