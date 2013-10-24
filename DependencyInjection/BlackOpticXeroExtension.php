@@ -31,7 +31,7 @@ class BlackOpticXeroExtension extends Extension
             'private_key' => $config['private_key']
         );
 
-        if($config['xero']['application_type'] == Configuration::APPLICATION_TYPE_PRIVATE){
+        if($config['application_type'] == Configuration::APPLICATION_TYPE_PRIVATE){
             $xeroConfig['token'] = $xeroConfig['consumer_key'];
             $xeroConfig['token_secret'] = $xeroConfig['consumer_secret'];
         }
