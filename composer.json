@@ -1,0 +1,24 @@
+{
+    "name": "blackoptic/xerobundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Bundle that creates an Guzzle client for Xero",
+    "keywords": ["symfony2", "xero", "accounts", "guzzle"],
+    "homepage": "https://github.com/james75/XeroBundle",
+    "authors": [
+        {
+            "name": "James Watson"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-openssl": "*",
+        "symfony/symfony": "2.*",
+        "guzzle/guzzle": "3.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "BlackOptic\\Bundle\\XeroBundle": ""
+        }
+    },
+    "target-dir": "BlackOptic/Bundle/XeroBundle"
+}
