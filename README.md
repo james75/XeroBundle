@@ -29,7 +29,7 @@
        ...
    ```
 
-3. Register the bundle in your `app/AppKernel.php`:
+3. Add the config for your account details:
 
    ``` yaml
     black_optic_xero:
