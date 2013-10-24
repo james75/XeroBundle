@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $builder = new TreeBuilder();
-        $node = $builder->root('xero');
+        $node = $builder->root('black_optic_xero');
         $node
         ->isRequired()
             ->children()

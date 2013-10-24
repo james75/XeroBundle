@@ -32,7 +32,7 @@
 3. Register the bundle in your `app/AppKernel.php`:
 
    ``` yaml
-    xero:
+    black_optic_xero:
         consumer_key: <Your Consumer Key>
         consumer_secret: <Your Consumer Secret>
         private_key: <Path to you private key>
