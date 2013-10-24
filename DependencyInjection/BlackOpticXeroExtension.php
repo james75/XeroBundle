@@ -19,17 +19,19 @@ class BlackOpticXeroExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $config);
 
-        $privateKeyFile = $config['xero']['private_key'];
+        $config = $config['black_optic_xero'];
+
+        $privateKeyFile = $config['private_key'];
 
         if(!file_exists($privateKeyFile)){
             throw new FileNotFoundException('Unable able to find file: ' . $privateKeyFile);
         }
 
         $xeroConfig = array(
-            'base_url' => $config['xero']['base_url'],
-            'consumer_key' => $config['xero']['consumer_key'],
-            'consumer_secret' => $config['xero']['consumer_secret'],
-            'private_key' => $config['xero']['private_key']
+            'base_url' => $config['base_url'],
+            'consumer_key' => $config['consumer_key'],
+            'consumer_secret' => $config['consumer_secret'],
+            'private_key' => $config['private_key']
         );
 
         if($config['xero']['application_type'] == Configuration::APPLICATION_TYPE_PRIVATE){
