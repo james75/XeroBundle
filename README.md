@@ -36,3 +36,8 @@
         consumer_secret: <Your Consumer Secret>
         private_key: <Path to you private key>
    ```
+4. Request and use the service:
+    ``` php
+        $xeroClient = $this->get('blackoptic.xero.client');
+        $response = $xeroClient->get('Invoices')->send();
+    ```
