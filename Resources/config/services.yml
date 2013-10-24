@@ -1,7 +1,7 @@
 parameters:
-    blackoptic_xero.client:  BlackOptic\Bundle\XeroBundle\XeroClient
+    blackoptic_xero_client:  BlackOptic\Bundle\XeroBundle\XeroClient
 
 services:
     blackoptic.xero.client:
-        class:        %blackoptic_xero.client%
+        class:        %blackoptic_xero_client%
         arguments:    [%xero_config%]
