@@ -4,6 +4,7 @@
     "description": "Symfony2 Bundle that creates an Guzzle client for Xero",
     "keywords": ["symfony2", "xero", "accounts", "guzzle"],
     "homepage": "https://github.com/james75/XeroBundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "James Watson"
