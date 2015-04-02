@@ -16,6 +16,9 @@
         "symfony/symfony": "2.*",
         "guzzle/guzzle": "3.*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
     "autoload": {
         "psr-0": {
             "BlackOptic\\Bundle\\XeroBundle": ""

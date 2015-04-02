@@ -6,6 +6,7 @@ use Guzzle\Common\Collection;
 use Guzzle\Plugin\Oauth\OauthPlugin;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use BlackOptic\Bundle\XeroBundle\Exception\FileNotFoundException;
 
 class XeroClient extends Client
 {
@@ -39,6 +40,10 @@ class XeroClient extends Client
             $config['token_secret'] = & $this->tokenSecret;
         }
 
+        if (empty($config['private_key']) || !file_exists($config['private_key'])) {
+            throw new FileNotFoundException('Unable able to find file: ' . $config['private_key']);
+        }
+
         $privateKey = file_get_contents($config['private_key']);
 
         $config['signature_method'] = 'RSA-SHA1';
@@ -49,6 +54,10 @@ class XeroClient extends Client
             openssl_free_key($privateKeyId);
             return $signature;
         };
+
+        if ($config['signature_callback'] === '') {
+            throw new \Exception('Could not create signature from key');
+        }
 
         $config = Collection::fromConfig($config, array(), $required);
         parent::__construct($config->get('base_url'), $config);
