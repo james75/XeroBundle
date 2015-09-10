@@ -33,5 +33,8 @@ class XeroClientTest extends TestBase
         $client = new XeroClient($this->options);
 
         $this->assertNotNull($client);
+
+        // Test set token methods.
+        $client->setToken('a', 'b');
     }
 }

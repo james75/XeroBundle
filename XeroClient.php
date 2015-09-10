@@ -2,8 +2,8 @@
 
 namespace BlackOptic\Bundle\XeroBundle;
 
-use GuzzleHttp\Collection;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use BlackOptic\Bundle\XeroBundle\Exception\FileNotFoundException;
 
@@ -24,7 +24,7 @@ class XeroClient extends Client
     public function __construct($config = array())
     {
         $required = array(
-            'base_url',
+            'base_uri',
             'consumer_key',
             'consumer_secret',
             'token',
@@ -37,6 +37,25 @@ class XeroClient extends Client
 
         if (!array_key_exists('token_secret', $config)) {
             $config['token_secret'] = & $this->tokenSecret;
+        }
+
+        if (!array_key_exists('base_uri', $config) || !array_key_exists('base_url', $config)) {
+            throw new \InvalidArgumentException('base_uri is required in configuration');
+        }
+
+        // Use base_uri instead of deprecated base_url configuration.
+        if (!array_key_exists('base_uri', $config)) {
+            $config['base_uri'] = $config['base_url'];
+            unset($config['base_url']);
+        }
+
+        // Guzzle no longer supports Collection.
+        if (!array_key_exists('consumer_key', $config)) {
+            throw new \InvalidArgumentException('consumer_key is required in configuration');
+        }
+
+        if (!array_key_exists('consumer_secret', $config)) {
+            throw new \InvalidArgumentException('consumer_secret is required in configuration');
         }
 
         if (empty($config['private_key']) || !file_exists($config['private_key'])) {
@@ -58,12 +77,27 @@ class XeroClient extends Client
             throw new \Exception('Could not create signature from key');
         }
 
-        // Add defaults array per oauth-subscriber.
-        $config['defaults'] = ['auth' => 'oauth'];
+        $stack = HandlerStack::create();
+        // Create an oauth middleware and push it onto the handler stack.
+        $middleware = new Oauth1([
+            'consumer_key' => $config['consumer_key'],
+            'consumer_secret' => $config['consumer_secret'],
+            'token' => $config['token'],
+            'token_secret' => $config['token_secret'],
+        ]);
+        $stack->push($middleware);
 
-        parent::__construct($config);
+        parent::__construct([
+            'base_uri' => $config['base_uri'],
+            'handler' => $stack,
+            'auth' => 'oauth'
+        ]);
+    }
 
-        $config = Collection::fromConfig($config, array(), $required);
-        $this->getEmitter()->attach(new Oauth1([$config->toArray()]));
+    public function setToken($token, $tokenSecret)
+    {
+        $this->token = $token;
+        $this->tokenSecret = $tokenSecret;
+        return $this;
     }
 }
