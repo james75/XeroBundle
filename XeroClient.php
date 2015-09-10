@@ -39,7 +39,7 @@ class XeroClient extends Client
             $config['token_secret'] = & $this->tokenSecret;
         }
 
-        if (!array_key_exists('base_uri', $config) || !array_key_exists('base_url', $config)) {
+        if (!array_key_exists('base_uri', $config) && !array_key_exists('base_url', $config)) {
             throw new \InvalidArgumentException('base_uri is required in configuration');
         }
 
