@@ -2,10 +2,9 @@
 
 namespace BlackOptic\Bundle\XeroBundle;
 
-use Guzzle\Common\Collection;
-use Guzzle\Plugin\Oauth\OauthPlugin;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
+use GuzzleHttp\Collection;
+use GuzzleHttp\Client;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use BlackOptic\Bundle\XeroBundle\Exception\FileNotFoundException;
 
 class XeroClient extends Client
@@ -59,16 +58,12 @@ class XeroClient extends Client
             throw new \Exception('Could not create signature from key');
         }
 
+        // Add defaults array per oauth-subscriber.
+        $config['defaults'] = ['auth' => 'oauth'];
+
+        parent::__construct($config);
+
         $config = Collection::fromConfig($config, array(), $required);
-        parent::__construct($config->get('base_url'), $config);
-        $this->addSubscriber(new OauthPlugin($config->toArray()));
+        $this->getEmitter()->attach(new Oauth1([$config->toArray()]));
     }
-
-    public function setToken($token, $tokenSecret)
-    {
-        $this->token = $token;
-        $this->tokenSecret = $tokenSecret;
-        return $this;
-    }
-
 }
